@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BeadBunch - Checkout</title>
+    <link rel="stylesheet" href="../resources/styles.css">
+</head>
+<body>
+<h1>Checkout</h1>
+<form action="/submit-order" method="post">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="address">Shipping Address:</label><br>
+    <textarea id="address" name="address" rows="4" required></textarea><br><br>
+
+    <label for="payment">Payment Method:</label><br>
+    <select id="payment" name="payment">
+        <option value="credit">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="cod">Cash on Delivery</option>
+    </select><br><br>
+
+    <button type="submit">Place Order</button>
+</form>
+<br>
+<a href="/">Go Back to Home</a>
+</body>
+</html>

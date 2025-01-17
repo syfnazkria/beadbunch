@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BeadBunch - Keyrings</title>
+    <link rel="stylesheet" href="../resources/styles.css">
+</head>
+<body>
+<h1>Keyrings Collection</h1>
+<div>
+    <p><strong>Keyring 1</strong> - $5.00</p>
+    <button onclick="addToCart('Keyring 1', 5.00)">Add to Cart</button>
+</div>
+<div>
+    <p><strong>Keyring 2</strong> - $7.00</p>
+    <button onclick="addToCart('Keyring 2', 7.00)">Add to Cart</button>
+</div>
+<br>
+<a href="/">Go Back to Home</a>
+</body>
+<script>
+    function addToCart(item, price) {
+        alert(item + " added to cart for $" + price.toFixed(2));
+    }
+</script>
+</html>
