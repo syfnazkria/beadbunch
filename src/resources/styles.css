@@ -45,12 +45,24 @@ header {
     padding: 20px;
 }
 
-.logo h1 {
-    margin: 0;
+.logo img {
+    height: 55px; /* Adjust logo size */
+    width: auto;  /* Maintain aspect ratio */
 }
 
 nav {
     display: flex;
+}
+
+nav a {
+    margin: 0 15px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
 }
 
 /* Main Section */
