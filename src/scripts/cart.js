@@ -1,37 +1,23 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Select all 'Add to Cart' buttons
-    const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+// Initialize the cart from localStorage or create an empty cart
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Add event listener to each button
-    addToCartBtns.forEach(button => {
-        button.addEventListener('click', function() {
-            // Get item data from button attributes
-            const itemName = this.getAttribute('data-name');
-            const itemPrice = parseFloat(this.getAttribute('data-price'));
+// Function to add a product to the cart
+function addToCart(productName, productPrice) {
+    cart.push({ name: productName, price: productPrice });
+    localStorage.setItem('cart', JSON.stringify(cart));  // Save the updated cart in localStorage
+    alert(`${productName} has been added to your cart.`);
+}
 
-            // Create a payload to send to the server
-            const payload = {
-                name: itemName,
-                price: itemPrice
-            };
-
-            // Send a POST request to add the item to the cart
-            fetch('/cart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-                .then(response => response.text())
-                .then(data => {
-                    console.log('Item added to cart:', data);
-                    alert(data); // Show success message to the user
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Failed to add item to cart.');
-                });
+// Function to display the cart contents
+function viewCart() {
+    if (cart.length === 0) {
+        document.getElementById('cartContents').innerHTML = "Your cart is empty.";
+    } else {
+        let cartHTML = "<h2>Your Cart:</h2><ul>";
+        cart.forEach((item, index) => {
+            cartHTML += `<li>${item.name} - $${item.price}</li>`;
         });
-    });
-});
+        cartHTML += "</ul>";
+        document.getElementById('cartContents').innerHTML = cartHTML;
+    }
+}

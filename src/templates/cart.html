@@ -1,37 +1,19 @@
-<!-- cart.html -->
-<div class="cart-container">
-    <button class="add-to-cart-btn">Add to Cart</button>
-    <div class="cart-icon">
-        <img src="cart-icon.png" alt="Cart">
-        <span class="cart-count">0</span>
-    </div>
-    <div class="cart-notification" style="display: none;">
-        <p>Item added to cart!</p>
-    </div>
-    <div class="cart-content">
-        <ul class="cart-items">
-            <!-- Cart items will be dynamically inserted here -->
-        </ul>
-        <button class="checkout-btn">Proceed to Checkout</button>
-    </div>
-</div>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="resources/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart</title>
 </head>
-
-<script src="scripts/cart.js"></script>
-
-<!-- Cart Notification (will be shown after adding an item) -->
-<div class="cart-notification" style="display:none;">
-    Item added to cart!
+<body>
+<h1>Your Shopping Cart</h1>
+<div id="cartContents">
+  <!-- Cart contents will be displayed here -->
 </div>
-
-<!-- Cart Info -->
-<div class="cart-info">
-    <p>Items in Cart: <span class="cart-count">0</span></p>
-    <p>Total Price: <span class="cart-total">$0.00</span></p>
-</div>
-
-<!-- Button to Add Item to Cart -->
-<button class="add-to-cart-btn">Add to Cart</button>
+<script src="cart.js"></script>
+<script>
+  // Automatically display cart contents when the cart page is loaded
+  viewCart();
+</script>
+</body>
+</html>
