@@ -4,10 +4,12 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    color: #333;
 }
 
 h1, h2, h3, h4 {
     color: #333;
+    margin: 0;
 }
 
 a {
@@ -83,15 +85,18 @@ main {
     background-color: #0056b3;
 }
 
-/* Product Showcase */
+/* Product Showcase Styles */
 .product-showcase {
     text-align: center;
+    margin-top: 20px;
 }
 
 .product-list {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    display: grid; /* Use grid for a flexible, responsive layout */
+    grid-template-columns: repeat(2, 1fr); /* Two items per row */
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 1200px; /* Limit the width */
 }
 
 .product-item {
@@ -99,10 +104,12 @@ main {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 220px;
-    margin: 15px;
     text-align: center;
     transition: transform 0.3s ease;
+    height: 420px; /* Set a fixed height to make products consistent */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-item:hover {
@@ -111,6 +118,8 @@ main {
 
 .product-item img {
     width: 100%;
+    height: 250px; /* Ensure consistent image height */
+    object-fit: cover; /* Crop images to maintain aspect ratio */
     border-radius: 8px;
     margin-bottom: 15px;
 }
@@ -122,6 +131,15 @@ main {
 
 .product-item p {
     color: #888;
+    font-size: 0.9rem;
+    margin: 10px 0;
+}
+
+.product-item .price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #28a745;
+    margin: 10px 0;
 }
 
 .product-item .btn {
@@ -131,8 +149,24 @@ main {
     border-radius: 5px;
     font-size: 1rem;
     margin-top: 10px;
+    cursor: pointer;
+    border: none;
 }
 
 .product-item .btn:hover {
     background-color: #218838;
 }
+
+keyrings.product-list {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    height: 650px; /* Set a fixed height to make products consistent */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+

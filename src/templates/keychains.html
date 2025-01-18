@@ -1,25 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>BeadBunch - Keychains</title>
-    <link rel="stylesheet" href="../resources/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeadBunch - Keychain</title>
+    <link rel="stylesheet" href="/resources/styles.css">
 </head>
-<body>
-<h1>Keychains Collection</h1>
-<div>
-    <p><strong>Keychain 1</strong> - $8.00</p>
-    <button onclick="addToCart('Keychain 1', 8.00)">Add to Cart</button>
-</div>
-<div>
-    <p><strong>Keychain 2</strong> - $10.00</p>
-    <button onclick="addToCart('Keychain 2', 10.00)">Add to Cart</button>
-</div>
-<br>
-<a href="/">Go Back to Home</a>
+
+<main>
+    <section class="hero">
+        <h2>Keychains!!</h2>
+        <p>Your one-stop shop for beautiful accessories. Discover our stunning collection of handcrafted jewelry and keychains!</p>
+    </section>
+
+    <section class="product-showcase">
+        <h3>Products</h3>
+        <div class="product-list">
+            <div class="product-item">
+                <img src="/resources/keychain1.jpg" alt="Keychain 1">
+                <h2>Keychain 1</h2>
+                <p>Customizable and perfect for gifts.</p>
+                <div class="price">$9.99</div>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="/resources/keychain2.jpg" alt="Keychain 2">
+                <h2>Keychain 2</h2>
+                <p>Stylish and practical for daily use.</p>
+                <div class="price">$12.99</div>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="/resources/keychain3.jpg" alt="Keychain 3">
+                <h2>Keychain 3</h2>
+                <p>Brighten your day with this unique design.</p>
+                <div class="price">$10.99</div>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="/resources/keychain4.jpg" alt="Keychain 4">
+                <h2>Keychain 4</h2>
+                <p>Durable and made to last.</p>
+                <div class="price">$8.99</div>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="/resources/keychain5.jpg" alt="Keychain 5">
+                <h2>Keychain 5</h2>
+                <p>Classic design with modern features.</p>
+                <div class="price">$11.99</div>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="/resources/keychain6.jpg" alt="Keychain 6">
+                <h2>Keychain 6</h2>
+                <p>A touch of elegance for your keys.</p>
+                <div class="price">$13.99</div>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 BeadBunch. All Rights Reserved.</p>
+</footer>
 </body>
-<script>
-    function addToCart(item, price) {
-        alert(item + " added to cart for $" + price.toFixed(2));
-    }
-</script>
 </html>
+
