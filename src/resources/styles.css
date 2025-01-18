@@ -179,46 +179,67 @@ keyrings.product-list {
     justify-content: space-between;
 }
 
-/* resources/styles.css */
-.cart-container {
-    position: relative;
-}
-
-.cart-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-}
-
-.cart-notification {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: green;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.cart-content {
-    display: none; /* Initially hidden */
-    position: absolute;
-    top: 40px;
-    right: 10px;
-    background-color: white;
-    border: 1px solid #ddd;
-    width: 200px;
-}
-
-.cart-items {
-    list-style-type: none;
+/* Basic Layout for Cart */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
     padding: 0;
 }
 
-.checkout-btn {
-    display: block;
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.cart-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.cart-item {
+    margin: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
     width: 100%;
-    margin-top: 10px;
+    bottom: 0;
+}
+
+/* Additional styling for empty cart and price */
+#empty-message {
+    font-size: 20px;
+    color: #888;
+}
+
+#total-price {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
