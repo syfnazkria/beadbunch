@@ -1,19 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>BeadBunch - Cart</title>
-    <link rel="stylesheet" href="../resources/styles.css">
-</head>
-<body>
-<h1>Your Cart</h1>
-<div id="cartItems">
-    <p>No items in cart yet!</p>
+<!-- cart.html -->
+<div class="cart-container">
+    <button class="add-to-cart-btn">Add to Cart</button>
+    <div class="cart-icon">
+        <img src="cart-icon.png" alt="Cart">
+        <span class="cart-count">0</span>
+    </div>
+    <div class="cart-notification" style="display: none;">
+        <p>Item added to cart!</p>
+    </div>
+    <div class="cart-content">
+        <ul class="cart-items">
+            <!-- Cart items will be dynamically inserted here -->
+        </ul>
+        <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
 </div>
-<br>
-<a href="/checkout">Proceed to Checkout</a><br>
-<a href="/">Go Back to Home</a>
-</body>
-<script>
-    // Placeholder: Implement cart display with server-side rendering or JavaScript
-</script>
-</html>
+
+<head>
+    <link rel="stylesheet" href="resources/styles.css">
+</head>
+
+<script src="scripts/cart.js"></script>
+
+<!-- Cart Notification (will be shown after adding an item) -->
+<div class="cart-notification" style="display:none;">
+    Item added to cart!
+</div>
+
+<!-- Cart Info -->
+<div class="cart-info">
+    <p>Items in Cart: <span class="cart-count">0</span></p>
+    <p>Total Price: <span class="cart-total">$0.00</span></p>
+</div>
+
+<!-- Button to Add Item to Cart -->
+<button class="add-to-cart-btn">Add to Cart</button>
