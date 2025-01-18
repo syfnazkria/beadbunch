@@ -72,37 +72,96 @@ main {
 
 .hero {
     text-align: center;
-    background-color: #fff;
-    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight background tint */
+    padding: 40px 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 40px;
     color: #0e0d0d;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h2 {
     font-size: 3.5rem;
-    margin-bottom: 10px;
-    color: #0e0d0d;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 700;
+    letter-spacing: 2px;
 }
 
 .hero p {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #555;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 .cta-btn {
-    padding: 12px 25px;
+    padding: 15px 30px;
     background-color: #007bff;
     color: white;
-    border-radius: 5px;
-    font-size: 1rem;
+    border-radius: 30px; /* Rounded buttons */
+    font-size: 1.1rem;
     margin: 10px;
     display: inline-block;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .cta-btn:hover {
     background-color: #0056b3;
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Add an animated background effect */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/resources/welcome-bg.jpg') no-repeat center center/cover; /* Add a background image */
+    opacity: 0.4;
+    z-index: 0;
+}
+
+/* Image Slider Styles */
+.image-slider {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.slider-wrapper {
+    overflow: hidden;
+    width: 100%; /* Full width of the screen */
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slider img {
+    width: 100vw; /* 100% of the viewport width */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the image covers the container without distortion */
 }
 
 /* Product Showcase Styles */
@@ -176,19 +235,6 @@ main {
 
 .product-item .btn:hover {
     background-color: #218838;
-}
-
-keyrings.product-list {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease;
-    height: 650px; /* Set a fixed height to make products consistent */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
 /* Basic Layout for Cart */
