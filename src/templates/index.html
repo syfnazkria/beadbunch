@@ -9,7 +9,7 @@
 <body>
 <header>
     <div class="logo">
-        <img src="/resources/logo.jpg" alt="BeadBunch" />
+        <img src="/resources/Logo.jpg" alt="BeadBunch" />
     </div>
     <nav>
         <a href="/index">Home</a>
@@ -21,10 +21,25 @@
 
 <main>
     <section class="hero">
-        <h2>Welcome to BeadBunch!</h2>
-        <p>Your one-stop shop for beautiful accessories. Discover our stunning collection of handcrafted jewelry and keychains!</p>
-        <a href="/keyrings" class="cta-btn">Explore Keyrings</a>
-        <a href="/keychains" class="cta-btn">Explore Keychains</a>
+        <div class="hero-content">
+            <h2>Welcome to BeadBunch!</h2>
+            <p>Your one-stop shop for beautiful accessories. Discover our stunning collection of handcrafted jewelry and keychains!</p>
+            <div class="cta-container">
+                <a href="/keyrings" class="cta-btn">Explore Keyrings</a>
+                <a href="/keychains" class="cta-btn">Explore Keychains</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Slider -->
+    <section class="image-slider">
+        <div class="slider-wrapper">
+            <div class="slider">
+                <img src="/resources/slide1.jpg" alt="Slide 1">
+                <img src="/resources/slide2.jpg" alt="Slide 2">
+                <img src="/resources/slide3.jpg" alt="Slide 3">
+            </div>
+        </div>
     </section>
 
     <section class="product-showcase">
@@ -43,7 +58,7 @@
                 <a href="/keyrings" class="btn">View Product</a>
             </div>
             <div class="product-item">
-                <img src="/resources/keychain1.jpg" alt="Keychaing 1">
+                <img src="/resources/keychain1.jpg" alt="Keychain 1">
                 <h4>Keychain 1</h4>
                 <p>$7.00</p>
                 <a href="/keychains" class="btn">View Product</a>
@@ -61,5 +76,20 @@
 <footer>
     <p>&copy; 2025 BeadBunch. All Rights Reserved.</p>
 </footer>
+</body>
+</html>
+
+
+<script>
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.slider img');
+
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        const newTransformValue = -(currentIndex * (images[0].clientWidth + 30));  // Image width + margin
+        document.querySelector('.slider').style.transform = `translateX(${newTransformValue}px)`;
+    }, 3000);  // Change every 3 seconds
+</script>
+
 </body>
 </html>
