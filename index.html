@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeadBunch - Home</title>
+    <link rel="stylesheet" href="/resources/styles.css">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="/resources/Logo.jpg" alt="BeadBunch" />
+    </div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/keyrings">Browse Keyrings</a>
+        <a href="/keychains">Browse Keychains</a>
+        <a href="/cart">View Cart</a>
+        <a href="/admin">Admin Dashboard</a> <!-- This link leads to the Admin page -->
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Welcome to BeadBunch!</h2>
+            <p>Your one-stop shop for beautiful accessories. Discover our stunning collection of handcrafted jewelry and keychains!</p>
+            <div class="cta-container">
+                <a href="/keyrings" class="cta-btn">Explore Keyrings</a>
+                <a href="/keychains" class="cta-btn">Explore Keychains</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Slider -->
+    <section class="image-slider">
+        <div class="slider-wrapper">
+            <div class="slider">
+                <img src="/resources/slide1.jpg" alt="Slide 1">
+                <img src="/resources/slide2.jpg" alt="Slide 2">
+                <img src="/resources/slide3.jpg" alt="Slide 3">
+            </div>
+        </div>
+    </section>
+
+    <section class="product-showcase">
+        <h3>Popular Products</h3>
+        <div class="product-list">
+            <div class="product-item">
+                <img src="/resources/keyring1.jpg" alt="Keyring 1">
+                <h2>Teddy Bloom Keyring</h2>
+                <p>A charming keyring.</p>
+                <div class="price">RM7.99</div>
+                <a href="/keyrings" class="btn">View Product</a>
+            </div>
+            <div class="product-item">
+                <img src="/resources/keyring2.jpg" alt="Keyring 2">
+                <h2>Whimsy Charm Keyring</h2>
+                <p>A cheerful vibe.</p>
+                <div class="price">RM10.99</div>
+                <a href="/keyrings" class="btn">View Product</a>
+            </div>
+            <div class="product-item">
+                <img src="/resources/keychain5.jpg" alt="Keychain 5">
+                <h2>Berry Cat Keychain</h2>
+                <p>A sweet and fruity cat.</p>
+                <div class="price">RM11.99</div>
+                <a href="/keychains" class="btn">View Product</a>
+            </div>
+            <div class="product-item">
+                <img src="/resources/keychain4.jpg" alt="Keychain 4">
+                <h2>Moo Moo Cat Keychain</h2>
+                <p>An adorable orange cat.</p>
+                <div class="price">RM8.99</div>
+                <a href="/keychains" class="btn">View Product</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section about">
+            <h4>About Us</h4>
+            <p>At BeadBunch, we are passionate about crafting unique and beautiful accessories that bring joy and style to your everyday life. Founded in 2025, our mission is to offer high-quality, handcrafted jewelry and keychains made with love and care.</p>
+        </div>
+        <div class="footer-section contact">
+            <h4>Contact Us</h4>
+            <p>We’d love to hear from you! Reach out to us via email or connect on our social platforms:</p>
+            <ul class="social-links">
+                <li><a href="mailto:contact@beadbunch.com">Email Us</a></li>
+                <li><a href="https://www.instagram.com/lightlybeaded?igsh=a3Nuank2aWpieG9s" target="_blank">Instagram</a></li>
+                <li><a href="https://www.facebook.com/beadbunch" target="_blank">Facebook</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 BeadBunch. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+<script>
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.slider img');
+
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        const newTransformValue = -(currentIndex * (images[0].clientWidth + 30));  // Image width + margin
+        document.querySelector('.slider').style.transform = `translateX(${newTransformValue}px)`;
+    }, 3000);  // Change every 3 seconds
+</script>
+
+</body>
+</html>
