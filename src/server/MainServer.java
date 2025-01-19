@@ -5,13 +5,11 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 import server.Handlers.*;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MainServer {
     public static void main(String[] args) throws IOException {
@@ -22,15 +20,75 @@ public class MainServer {
         server.createContext("/", new HomeHandler());
         server.createContext("/keyrings", new KeyringsHandler());
         server.createContext("/keychains", new KeychainsHandler());
-        server.createContext("/cart", new CartHandler());  // Added cart handler
+        server.createContext("/cart", new CartHandler());
         server.createContext("/checkout", new CheckoutHandler());
+        server.createContext("/admin", new AdminPageHandler()); // Added Admin Page Handler
 
-        // Add static file serving for /resources
+        // Static file serving for /resources
         server.createContext("/resources", new StaticFileHandler());
 
-        server.setExecutor(null); // Default executor for handling requests
         System.out.println("Server is running on http://localhost:8080");
         server.start();
+    }
+
+    // Handler to serve the Admin Page
+    static class AdminPageHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            String adminPagePath = "src/templates/admin.html"; // Path to the admin page
+            System.out.println("Looking for admin page at: " + adminPagePath);
+
+            if ("GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+                File adminPage = new File(adminPagePath);
+
+                if (adminPage.exists()) {
+                    String htmlContent = Files.lines(adminPage.toPath()).collect(Collectors.joining("\n"));
+                    htmlContent = htmlContent.replace("{{CART_DATA}}", readCSV("src/resources/cart.csv"));
+                    htmlContent = htmlContent.replace("{{CHECKOUT_DATA}}", readCSV("src/resources/checkout.csv"));
+
+                    exchange.getResponseHeaders().add("Content-Type", "text/html");
+                    exchange.sendResponseHeaders(200, htmlContent.getBytes().length);
+                    OutputStream os = exchange.getResponseBody();
+                    os.write(htmlContent.getBytes());
+                    os.close();
+                } else {
+                    System.err.println("Admin page not found at: " + adminPagePath);
+                    String errorMessage = "Admin page not found.";
+                    exchange.sendResponseHeaders(404, errorMessage.getBytes().length);
+                    OutputStream os = exchange.getResponseBody();
+                    os.write(errorMessage.getBytes());
+                    os.close();
+                }
+            } else {
+                exchange.sendResponseHeaders(405, -1);
+            }
+        }
+
+        // Method to read CSV and format it into an HTML table
+        private String readCSV(String filePath) {
+            StringBuilder tableContent = new StringBuilder();
+            try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                boolean isHeader = true;
+
+                while ((line = br.readLine()) != null) {
+                    String[] columns = line.split(",");
+                    tableContent.append("<tr>");
+                    for (String column : columns) {
+                        if (isHeader) {
+                            tableContent.append("<th>").append(column.trim()).append("</th>");
+                        } else {
+                            tableContent.append("<td>").append(column.trim()).append("</td>");
+                        }
+                    }
+                    tableContent.append("</tr>");
+                    isHeader = false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return tableContent.toString();
+        }
     }
 
     // Handler to serve static files
@@ -38,6 +96,8 @@ public class MainServer {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             String filePath = "src" + exchange.getRequestURI().getPath();
+            System.out.println("Serving static file: " + filePath);
+
             try {
                 byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
                 exchange.sendResponseHeaders(200, fileBytes.length);
@@ -45,37 +105,10 @@ public class MainServer {
                 os.write(fileBytes);
                 os.close();
             } catch (IOException e) {
+                System.err.println("File not found: " + filePath);
                 exchange.sendResponseHeaders(404, 0);
                 exchange.getResponseBody().close();
             }
-        }
-    }
-
-    // Sample CartHandler
-    static class CartHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            // Get cart data (this could come from a session or local storage)
-            String response = "<h1>Your Shopping Cart</h1><ul>";
-
-            // This is a simple map to simulate cart items
-            // You can use a more sophisticated method to store the cart on the server side (like in a session or database)
-            Map<String, Integer> cartItems = new HashMap<>();
-            cartItems.put("Product 1", 10);
-            cartItems.put("Product 2", 15);
-
-            // Iterate over the cart items and display them
-            for (Map.Entry<String, Integer> entry : cartItems.entrySet()) {
-                response += "<li>" + entry.getKey() + " - $" + entry.getValue() + "</li>";
-            }
-            response += "</ul>";
-            response += "<a href='/checkout'>Proceed to Checkout</a>";
-
-            // Send response
-            exchange.sendResponseHeaders(200, response.getBytes().length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
         }
     }
 }

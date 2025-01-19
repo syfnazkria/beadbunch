@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/resources/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('/resources/backgroundAdmin.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: rgba(51, 51, 51, 0.9);
+      padding: 10px 20px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 5px rgb(248, 245, 240);
+    }
+
+    .logo img {
+      height: 50px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #fdfcfb;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #007BFF;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #fdfcfb;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    section {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table th {
+      background-color: rgba(212, 159, 241, 0.9); /* Purple color for header */
+      color: white;
+    }
+
+    table td {
+      background-color: white; /* White background for data rows */
+    }
+
+    table tr:nth-child(even) td {
+      background-color: #f9f9f9; /* Alternate light gray for even rows */
+    }
+
+    table tr:hover td {
+      background-color: #f1f1f1; /* Highlight on hover */
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+      background: rgb(51, 51, 51);
+      color: #fdfcfb;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    footer a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="/resources/logo.jpg" alt="BeadBunch" />
+  </div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/keyrings">Browse Keyrings</a>
+    <a href="/keychains">Browse Keychains</a>
+    <a href="/cart">View Cart</a>
+    <a href="/admin">Admin Dashboard</a>
+  </nav>
+</header>
+
+<h1>Admin Dashboard</h1>
+
+<section>
+  <h2>Cart Data</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{CART_DATA}}
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Checkout Data</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Payment</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{CHECKOUT_DATA}}
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  <p>&copy; 2025 BeadBunch. All Rights Reserved. <a href="/">Home</a></p>
+</footer>
+</body>
+</html>

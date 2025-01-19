@@ -5,9 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeadBunch - Keyrings</title>
     <link rel="stylesheet" href="/resources/styles.css">
-    <script src="cart.js" defer></script> <!-- Include the cart.js script -->
+    <script src="cart.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('/resources/backgroundkeyring.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+        header {
+            background-color: rgb(51, 51, 51);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgb(248, 245, 240);
+        }
+        .logo img {
+            height: 50px;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #fdfcfb;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #007BFF;
+        }
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            color: #0e0d0d;
+        }
+        .product-showcase {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .product-showcase h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #0e0d0d;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .product-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .product-item img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        .product-item h2 {
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .product-item p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #007BFF;
+            margin: 10px 0;
+        }
+        .add-to-cart-btn {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #9f5b5f;
+        }
+        .description {
+            margin-top: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: rgb(51, 51, 51);
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
-
+<body>
 <header>
     <div class="logo">
         <img src="/resources/logo.jpg" alt="BeadBunch" />
@@ -17,13 +139,14 @@
         <a href="/keyrings">Browse Keyrings</a>
         <a href="/keychains">Browse Keychains</a>
         <a href="/cart">View Cart</a>
+        <a href="/admin">Admin Dashboard</a>
     </nav>
 </header>
 
 <main>
     <section class="hero">
-        <h2>KEYRING</h2>
-        <p>Explore our adorable Mofusand keychains featuring charming cats and quirky designs that bring joy to your daily life. From playful outfits to fruity themes, these keychains are as functional as they are fun. Start your collection today and carry a smile wherever you go!</p>
+        <h2>KEYRINGS</h2>
+
     </section>
 
     <section class="product-showcase">
@@ -33,43 +156,46 @@
                 <img src="/resources/keyring1.jpg" alt="Keyring 1">
                 <h2>Teddy Bloom Keyring</h2>
                 <p>A charming keyring.</p>
-                <div class="price">$7.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="5.99">Add to Cart</button>
+                <div class="price">RM7.99</div>
+                <button class="add-to-cart-btn" data-name="Keyring" data-price="7.99">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="/resources/keyring2.jpg" alt="Keyring 2">
                 <h2>Whimsy Charm Keyring</h2>
                 <p>A cheerful vibe.</p>
-                <div class="price">$10.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="5.99">Add to Cart</button>
+                <div class="price">RM10.99</div>
+                <button class="add-to-cart-btn" data-name="Keyring" data-price="10.99">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="/resources/keyring3.jpg" alt="Keyring 3">
                 <h2>Ribbon Heart Keyring</h2>
                 <p>A delicate design.</p>
-                <div class="price">$9.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="5.99">Add to Cart</button>
+                <div class="price">RM9.99</div>
+                <button class="add-to-cart-btn" data-name="Keyring" data-price="9.99">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="/resources/keyring4.jpg" alt="Keyring 4">
                 <h2>Fairy Bear Keyring</h2>
                 <p>A whimsical, magical look.</p>
-                <div class="price">$10.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="5.99">Add to Cart</button>
+                <div class="price">RM10.99</div>
+                <button class="add-to-cart-btn" data-name="Keyring" data-price="10.99">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="/resources/keyring5.jpg" alt="Keyring 5">
                 <h2>Kitty Delight Keyring</h2>
                 <p>A cute and playful feel.</p>
-                <div class="price">$10.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="5.99">Add to Cart</button>
+                <div class="price">RM10.99</div>
+                <button class="add-to-cart-btn" data-name="Keyring" data-price="10.99">Add to Cart</button>
             </div>
         </div>
+        <p class="description">
+            Explore our diverse range of keyrings, with designs that add flair to your keys and accessories. From sleek to fun, there's something for everyone. Don't miss out on our limited-edition releases—grab yours today!
+        </p>
     </section>
 </main>
 
 <footer>
-    <p>&copy; 2025 BeadBunch. All rights reserved.</p>
+    <p>&copy; 2025 BeadBunch. All Rights Reserved.</p>
 </footer>
 </body>
 </html>

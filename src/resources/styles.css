@@ -13,7 +13,14 @@ body {
     color: #333; /* Ensure text is readable against the background */
 }
 
-h1, h2, h3, h4 {
+h1, h2, h4 {
+    color: #333;
+    margin: 0;
+}
+
+h3 {
+    font-size: 5.8rem;
+    font-family: 'Magide', serif;
     color: #333;
     margin: 0;
 }
@@ -72,37 +79,98 @@ main {
 
 .hero {
     text-align: center;
-    background-color: #fff;
-    padding: 40px;
+    background-color: rgba(246, 230, 209, 0.8); /* Slight background tint */
+    padding: 40px 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 40px;
     color: #0e0d0d;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h2 {
-    font-size: 3.5rem;
-    margin-bottom: 10px;
-    color: #0e0d0d;
+    font-size: 6.5rem;
+    margin-bottom: 15px;
+    color: #46181b;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-family: 'Abril Fatface', serif;
 }
 
 .hero p {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: #555;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Roboto', sans-serif;
+}
+
+.cta-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 .cta-btn {
-    padding: 12px 25px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    font-size: 1rem;
+    padding: 15px 30px;
+    background-color: #faf4b8;
+    color: #46181b;
+    border-radius: 30px; /* Rounded buttons */
+    font-size: 1.1rem;
     margin: 10px;
     display: inline-block;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .cta-btn:hover {
-    background-color: #0056b3;
+    background-color: #ffffff;
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Add an animated background effect */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/resources/welcome-bg.jpg') no-repeat center center/cover; /* Add a background image */
+    opacity: 0.4;
+    z-index: 0;
+}
+
+/* Image Slider Styles */
+.image-slider {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.slider-wrapper {
+    overflow: hidden;
+    width: 100%; /* Full width of the screen */
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slider img {
+    width: 100vw; /* 100% of the viewport width */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the image covers the container without distortion */
 }
 
 /* Product Showcase Styles */
@@ -165,7 +233,18 @@ main {
 
 .product-item .btn {
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #46181b;
+    color: white;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.product-item .add-to-cart-btn {
+    padding: 10px 20px;
+    background-color: #46181b;
     color: white;
     border-radius: 5px;
     font-size: 1rem;
@@ -175,20 +254,7 @@ main {
 }
 
 .product-item .btn:hover {
-    background-color: #218838;
-}
-
-keyrings.product-list {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease;
-    height: 650px; /* Set a fixed height to make products consistent */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: #9f5b5f;
 }
 
 /* Basic Layout for Cart */
@@ -234,14 +300,60 @@ header nav ul li a {
     background-color: #f9f9f9;
 }
 
-footer {
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
     background-color: #333;
     color: white;
-    padding: 10px;
+}
+
+.footer-section {
+    max-width: 400px;
+    margin: 10px;
+    text-align: left;
+}
+
+.footer-section h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #faf4b8;
+}
+
+.footer-section p {
+    font-size: 1rem;
+    font-family: 'Gotham';
+    line-height: 1.6;
+}
+
+.social-links {
+    list-style: none;
+    font-family: 'Gotham';
+    padding: 0;
+}
+
+.social-links li {
+    margin: 5px 0;
+}
+
+.social-links a {
+    color: #faf4b8;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom {
     text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    padding: 10px;
+    background-color: #2a2a2a;
+    font-size: 0.9rem;
+    position: static; /* Ensure footer stays at the bottom of the content */
 }
 
 /* Additional styling for empty cart and price */
