@@ -24,15 +24,34 @@ function addToCart(productName, productPrice) {
 
 // Function to display the cart contents
 function viewCart() {
-    // Fetch the cart contents from the server (or use localStorage as a fallback)
+    // Fetch the cart contents from the server
     fetch('/cart')
-        .then(response => response.text())
-        .then(data => {
-            // Display the cart content retrieved from the server
-            document.getElementById('cartContents').innerHTML = data;
+        .then(response => response.json())
+        .then(cartResponse => {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const totalElement = document.getElementById('cart-total');
+
+            // Clear previous cart items
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            cartResponse.items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>${item.quantity}</td>
+                    <td>$${(item.price * item.quantity).toFixed(2)}</td>
+                `;
+                cartItemsContainer.appendChild(row);
+                total += item.price * item.quantity;
+            });
+
+            // Update the total price
+            totalElement.innerText = total.toFixed(2);
         })
         .catch(error => {
             console.error('Error retrieving cart:', error);
-            document.getElementById('cartContents').innerHTML = "Failed to load cart.";
         });
 }
+
