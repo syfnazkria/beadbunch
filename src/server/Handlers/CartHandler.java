@@ -59,6 +59,7 @@ public class CartHandler implements HttpHandler {
     }
 
 
+
     private void handlePostRequest(HttpExchange exchange) throws IOException {
         InputStreamReader isr = new InputStreamReader(exchange.getRequestBody());
         BufferedReader br = new BufferedReader(isr);
@@ -120,6 +121,9 @@ public class CartHandler implements HttpHandler {
     }
 
     private String viewCart() {
+        // Log the size of the cart to see if it's actually empty or not
+        System.out.println("Cart size: " + items.size());  // Debug log to check cart size
+
         if (items.isEmpty()) {
             return "<p>Your cart is empty!</p>";
         }
@@ -134,12 +138,12 @@ public class CartHandler implements HttpHandler {
         }
         cartContents.append("</tbody></table>");
         cartContents.append("<p><strong>Total:</strong> RM").append(getTotal()).append("</p>");
+
         return cartContents.toString();
     }
+
 
     private double getTotal() {
         return items.stream().mapToDouble(item -> item.getPrice() * item.getQuantity()).sum();
     }
 }
-
-

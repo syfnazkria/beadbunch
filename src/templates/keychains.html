@@ -5,75 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeadBunch - Keychains</title>
     <link rel="stylesheet" href="/resources/styles.css">
-    <script>
-        // Update cart count
-        function updateCartCount() {
-            const cartCountElement = document.querySelector('.cart-count');
-            cartCountElement.textContent = cartCount;
-        }
-
-        // Function to handle "Add to Cart"
-        function addToCart(productId, productName, productPrice) {
-            cartCount++;
-            updateCartCount();
-
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const product = {
-                productId: productId,
-                name: productName,
-                price: productPrice
-            };
-            cart.push(product);
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
-
-        // Fetch products from server-side CSV and display them
-        function fetchAndDisplayProducts() {
-            fetch('products.csv')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch products CSV file');
-                    }
-                    return response.text();
-                })
-                .then(csvData => {
-                    parseCSV(csvData);
-                })
-                .catch(error => {
-                    console.error("Error fetching CSV data:", error);
-                });
-        }
-
-        // Parse CSV data and render products
-        function parseCSV(csvData) {
-            const rows = csvData.split('\n');
-            const productContainer = document.querySelector('.product-list');
-            rows.forEach((row, index) => {
-                if (index === 0) return;
-                const columns = row.split(',');
-                if (columns.length !== 6) {
-                    console.error("Invalid row detected, skipping:", row);
-                    return;
-                }
-                const [typecode, id, type, name, price, imageUrl] = columns;
-                if (typecode === '2') {
-                    const productHTML = `
-                        <div class="product-item">
-                            <img src="${imageUrl}" alt="${name}">
-                            <h2>${name}</h2>
-                            <p>${type}</p>
-                            <div class="price">RM ${price}</div>
-                            <button class="add-to-cart-btn" onclick="addToCart(${id}, '${name}', '${price}')">Add to Cart</button>
-                        </div>
-                    `;
-                    productContainer.innerHTML += productHTML;
-                }
-            });
-        }
-
-        window.onload = fetchAndDisplayProducts;
-    </script>
     <style>
+        /* Styles for the page */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -190,7 +123,7 @@
 
 <header>
     <div class="logo">
-        <img src="/resources/logo.jpg" alt="BeadBunch" />
+        <img src="/resources/logo.jpg" alt="BeadBunch">
     </div>
     <nav>
         <a href="/index">Home</a>
@@ -208,65 +141,89 @@
 
     <section class="product-showcase">
         <h3>Products</h3>
-        <div class="product-list">
-            <div class="product-item">
-                <img src="/resources/keyring1.jpg" alt="Keyring 1">
-                <h2>Teddy Bloom Keyring</h2>
-                <p>A charming keyring.</p>
+        <div class="product-list" id="product-list">
+            <div class="product-item" data-id="1" data-name="Teddy Bloom Keychain" data-price="7.99">
+                <img src="/resources/keyring1.jpg" alt="Keychain 1">
+                <h2>Teddy Bloom Keychain</h2>
+                <p>A charming keychain.</p>
                 <div class="price">RM7.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="7.99">Add to Cart</button>
+                <button class="add-to-cart-btn">Add to Cart</button>
             </div>
-            <div class="product-item">
-                <img src="/resources/keyring2.jpg" alt="Keyring 2">
-                <h2>Whimsy Charm Keyring</h2>
+            <div class="product-item" data-id="2" data-name="Whimsy Charm Keychain" data-price="10.99">
+                <img src="/resources/keyring2.jpg" alt="Keychain 2">
+                <h2>Whimsy Charm Keychain</h2>
                 <p>A cheerful vibe.</p>
                 <div class="price">RM10.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="10.99">Add to Cart</button>
+                <button class="add-to-cart-btn">Add to Cart</button>
             </div>
-            <div class="product-item">
-                <img src="/resources/keyring3.jpg" alt="Keyring 3">
-                <h2>Ribbon Heart Keyring</h2>
+            <div class="product-item" data-id="3" data-name="Ribbon Heart Keychain" data-price="9.99">
+                <img src="/resources/keyring3.jpg" alt="Keychain 3">
+                <h2>Ribbon Heart Keychain</h2>
                 <p>A delicate design.</p>
                 <div class="price">RM9.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="9.99">Add to Cart</button>
+                <button class="add-to-cart-btn">Add to Cart</button>
             </div>
-            <div class="product-item">
-                <img src="/resources/keyring4.jpg" alt="Keyring 4">
-                <h2>Fairy Bear Keyring</h2>
+            <div class="product-item" data-id="4" data-name="Fairy Bear Keychain" data-price="10.99">
+                <img src="/resources/keyring4.jpg" alt="Keychain 4">
+                <h2>Fairy Bear Keychain</h2>
                 <p>A whimsical, magical look.</p>
                 <div class="price">RM10.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="10.99">Add to Cart</button>
+                <button class="add-to-cart-btn">Add to Cart</button>
             </div>
-            <div class="product-item">
-                <img src="/resources/keyring5.jpg" alt="Keyring 5">
-                <h2>Kitty Delight Keyring</h2>
+
+            <div class="product-item" data-id="5" data-name="Kitty Delight Keychain" data-price="10.99">
+                <img src="/resources/keyring5.jpg" alt="Keychain 5">
+                <h2>Kitty Delight Keychain</h2>
                 <p>A cute and playful feel.</p>
                 <div class="price">RM10.99</div>
-                <button class="add-to-cart-btn" data-name="Keyring" data-price="10.99">Add to Cart</button>
+                <button class="add-to-cart-btn">Add to Cart</button>
             </div>
-        </div>
-        <p class="description">
-            Explore our diverse range of keyrings, with designs that add flair to your keys and accessories. From sleek to fun, there's something for everyone. Don't miss out on our limited-edition releases—grab yours today!
-        </p>
+
         </div>
     </section>
 </main>
-
-<script>
-    function addToCart(productId, productName, productPrice) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const product = { productId, name: productName, price: productPrice };
-        cart.push(product);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        alert(`${productName} added to cart!`);
-    }
-</script>
 
 <footer>
     <p>&copy; 2025 BeadBunch. All Rights Reserved.</p>
 </footer>
 
-<script src="scripts/cart.js"></script>
+<script>
+    // Add item to cart functionality
+    function addToCart(event) {
+        const productElement = event.target.closest('.product-item');
+        const productId = productElement.dataset.id;
+        const productName = productElement.dataset.name;
+        const productPrice = parseFloat(productElement.dataset.price);
+
+        // Create the product object
+        const product = { id: productId, name: productName, price: productPrice, quantity: 1 };
+
+        // Get the existing cart from localStorage, or initialize it as an empty array
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Check if the product already exists in the cart
+        const existingItemIndex = cart.findIndex(item => item.id === productId);
+
+        if (existingItemIndex !== -1) {
+            // If the product exists, update the quantity
+            cart[existingItemIndex].quantity += 1;
+        } else {
+            // If the product doesn't exist, add it to the cart
+            cart.push(product);
+        }
+
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Provide feedback to the user
+        alert(`${productName} has been added to your cart.`);
+    }
+
+    // Attach event listeners to all "Add to Cart" buttons
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', addToCart);
+    });
+</script>
 
 </body>
 </html>

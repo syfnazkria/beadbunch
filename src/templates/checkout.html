@@ -76,7 +76,7 @@
 
 <div class="container">
     <h1>Checkout</h1>
-    <form action="/submit-order" method="post">
+    <form id="checkout-form">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
 
@@ -97,6 +97,52 @@
         <a href="/">Go Back to Home</a>
     </div>
 </div>
+
+<script>
+    // Function to generate and download CSV
+    function generateCSV(cart, checkoutData) {
+        const header = ["Product", "Price", "Quantity", "Name", "Shipping Address", "Payment Method"];
+        const rows = cart.map(item => [
+            item.name,
+            item.price.toFixed(2),
+            item.quantity,
+            checkoutData.name,
+            checkoutData.address,
+            checkoutData.payment
+        ]);
+
+        // Combine header and rows into CSV format
+        const csvContent = [header, ...rows].map(row => row.join(',')).join('\n');
+
+        // Create a Blob and trigger the download
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'order.csv';
+        link.click();
+    }
+
+    // Form submit handler
+    document.getElementById('checkout-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent form from submitting normally
+
+        // Get cart data from localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Get checkout form data
+        const checkoutData = {
+            name: document.getElementById('name').value,
+            address: document.getElementById('address').value,
+            payment: document.getElementById('payment').value
+        };
+
+        // Generate and download the CSV
+        generateCSV(cart, checkoutData);
+
+        // Optional: Redirect to a confirmation page after order is placed
+        // window.location.href = '/order-confirmation';
+    });
+</script>
 
 </body>
 </html>

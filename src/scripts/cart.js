@@ -36,20 +36,44 @@ function loadCart() {
 }
 
 // Function to add item to cart
-function addToCart(productName, productPrice) {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const itemIndex = cart.findIndex((item) => item.name === productName);
+function addToCart(button) {
+    const productElement = button.parentElement;  // Get the parent element of the clicked button
+    const productId = productElement.querySelector('button').getAttribute('data-id');  // Get the product ID
+    const name = productElement.querySelector('button').getAttribute('data-name');  // Get the product name
+    const price = parseFloat(productElement.querySelector('button').getAttribute('data-price'));  // Get the price (as a number)
 
-    if (itemIndex > -1) {
-        cart[itemIndex].quantity += 1;
+    // Create the product object
+    const product = { id: productId, name: name, price: price, quantity: 1 };
+
+    // Get the existing cart from localStorage, or initialize it as an empty array
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Check if the product already exists in the cart
+    const existingItemIndex = cart.findIndex(item => item.id === productId);
+
+    if (existingItemIndex !== -1) {
+        // If the product exists, update the quantity
+        cart[existingItemIndex].quantity += 1;
     } else {
-        cart.push({ name: productName, price: parseFloat(productPrice), quantity: 1 });
+        // If the product doesn't exist, add it to the cart
+        cart.push(product);
     }
 
+    // Save the updated cart to localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`${productName} has been added to the cart.`);
-    loadCart();
+
+    // Provide feedback to the user
+    alert(`${name} has been added to your cart.`);
 }
+
+// Attach the addToCart function to all buttons with class 'add-to-cart-btn'
+document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        addToCart(this);  // Pass the clicked button to the addToCart function
+    });
+});
+
+
 
 // Function to remove item from cart
 function removeFromCart(index) {
