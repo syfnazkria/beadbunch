@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeadBunch - Keychain</title>
+    <title>BeadBunch - Keychains</title>
     <link rel="stylesheet" href="/resources/styles.css">
     <script src="cart.js" defer></script>
     <style>
@@ -74,6 +74,11 @@
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 200px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         .product-item img {
             max-width: 100%;
@@ -105,7 +110,6 @@
         .add-to-cart-btn:hover {
             background-color: #9f5b5f;
         }
-
         .description {
             margin-top: 30px;
             font-size: 1.1rem;
@@ -117,16 +121,17 @@
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
-
         footer {
             text-align: center;
             padding: 10px;
             background: rgb(51, 51, 51);
+            color: #fff;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
+
 <header>
     <div class="logo">
         <img src="/resources/logo.jpg" alt="BeadBunch" />
@@ -153,42 +158,42 @@
                 <h2>Lazy Sloth Keychain</h2>
                 <p>A relaxed sloth enjoying life.</p>
                 <div class="price">RM9.99</div>
-                <button class="add-to-cart-btn" data-name="Keychain" data-price="15.99">Add to Cart</button>
+                <button class="add-to-cart-btn" data-name="Lazy Sloth Keychain" data-price="9.99">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="/resources/keychain2.jpg" alt="Keychain 2">
                 <h2>Square Cat Keychain</h2>
                 <p>A quirky orange cat.</p>
                 <div class="price">RM12.99</div>
-                <button class="add-to-cart-btn" data-name="Keychain" data-price="15.99">Add to Cart</button>
+                <button class="add-to-cart-btn" data-name="Square Cat Keychain" data-price="12.99">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="/resources/keychain3.jpg" alt="Keychain 3">
                 <h2>Shark Cat Keychain</h2>
                 <p>A mischievous cat.</p>
                 <div class="price">RM10.99</div>
-                <button class="add-to-cart-btn" data-name="Keychain" data-price="15.99">Add to Cart</button>
+                <button class="add-to-cart-btn" data-name="Shark Cat Keychain" data-price="10.99">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="/resources/keychain4.jpg" alt="Keychain 4">
                 <h2>Moo Moo Cat Keychain</h2>
                 <p>An adorable orange cat.</p>
                 <div class="price">RM8.99</div>
-                <button class="add-to-cart-btn" data-name="Keychain" data-price="15.99">Add to Cart</button>
+                <button class="add-to-cart-btn" data-name="Moo Moo Cat Keychain" data-price="8.99">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="/resources/keychain5.jpg" alt="Keychain 5">
                 <h2>Berry Cat Keychain</h2>
                 <p>A sweet and fruity cat.</p>
                 <div class="price">RM11.99</div>
-                <button class="add-to-cart-btn" data-name="Keychain" data-price="15.99">Add to Cart</button>
+                <button class="add-to-cart-btn" data-name="Berry Cat Keychain" data-price="11.99">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="/resources/keychain6.jpg" alt="Keychain 6">
                 <h2>Melon Cat Keychain</h2>
                 <p>A summer vibes keychain.</p>
                 <div class="price">RM13.99</div>
-                <button class="add-to-cart-btn" data-name="Keychain" data-price="15.99">Add to Cart</button>
+                <button class="add-to-cart-btn" data-name="Melon Cat Keychain" data-price="13.99">Add to Cart</button>
             </div>
         </div>
         <p class="description">
@@ -200,5 +205,6 @@
 <footer>
     <p>&copy; 2025 BeadBunch. All Rights Reserved.</p>
 </footer>
+
 </body>
 </html>

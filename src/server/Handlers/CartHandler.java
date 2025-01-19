@@ -2,29 +2,23 @@ package server.Handlers;
 
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
-import com.google.gson.Gson; // Ensure the Gson library is imported
-import java.io.IOException;
+import com.google.gson.Gson;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.io.OutputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import models.CartResponse;
 import models.Item;
 
 public class CartHandler implements HttpHandler {
-    // List to store items in the cart
     private List<Item> items = new ArrayList<>();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        // Get the HTML template from the cart.html file
-        String response = new String(Files.readAllBytes(Paths.get("src/templates/cart.html")));
-
-        // Determine the HTTP method
         String method = exchange.getRequestMethod();
         if (method.equalsIgnoreCase("GET")) {
             handleGetRequest(exchange);
@@ -35,50 +29,62 @@ public class CartHandler implements HttpHandler {
         }
     }
 
-    // Handle GET requests (view cart)
     private void handleGetRequest(HttpExchange exchange) throws IOException {
-        // Read the cart.html file contents
-        String response = new String(Files.readAllBytes(Paths.get("src/templates/cart.html")));
-        exchange.getResponseHeaders().add("Content-Type", "text/html; charset=UTF-8");
-        exchange.sendResponseHeaders(200, response.getBytes().length);
+        String cartPagePath = "src/templates/cart.html"; // Path to the cart.html file
+        File cartPageFile = new File(cartPagePath);
 
-        try (OutputStream os = exchange.getResponseBody()) {
-            os.write(response.getBytes());
+        if (cartPageFile.exists()) {
+            // Read the cart.html file
+            String htmlContent = Files.lines(cartPageFile.toPath()).collect(Collectors.joining("\n"));
+
+            // Replace the placeholder with cart data
+            String cartData = viewCart(); // Generate the cart table or message
+            htmlContent = htmlContent.replace("{{CART_CONTENT}}", cartData);
+
+            // Send the response
+            exchange.getResponseHeaders().add("Content-Type", "text/html; charset=UTF-8");
+            exchange.sendResponseHeaders(200, htmlContent.getBytes().length);
+
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(htmlContent.getBytes());
+            }
+        } else {
+            // Handle missing cart.html file
+            String errorMessage = "<h1>Error 404: Cart Page Not Found</h1>";
+            exchange.sendResponseHeaders(404, errorMessage.getBytes().length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(errorMessage.getBytes());
+            }
         }
     }
 
 
-    // Handle POST requests (add items to cart)
     private void handlePostRequest(HttpExchange exchange) throws IOException {
         InputStreamReader isr = new InputStreamReader(exchange.getRequestBody());
         BufferedReader br = new BufferedReader(isr);
         StringBuilder requestData = new StringBuilder();
         String line;
-        // Read the request body
         while ((line = br.readLine()) != null) {
             requestData.append(line);
         }
-        // Deserialize JSON data into an Item object
+        System.out.println("Received POST data: " + requestData.toString());  // Debugging log
+
         Gson gson = new Gson();
         try {
             Item item = gson.fromJson(requestData.toString(), Item.class);
             items.add(item); // Add the item to the cart
-            // Log the added item
-            System.out.println("Item added to cart: " + item.getName() + " | Total Items: " + items.size());
-            // Respond to the client
-            String response = "Item added: " + item.getName() + " | Total: $" + getTotal();
+            System.out.println("Item added to cart: " + item.getName()); // Debugging log
+            String response = "Item added: " + item.getName() + " | Total: RM" + getTotal();
             exchange.sendResponseHeaders(200, response.getBytes().length);
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
         } catch (Exception e) {
-            // Handle invalid input
             exchange.sendResponseHeaders(400, -1); // Bad Request
             System.err.println("Error parsing item data: " + e.getMessage());
         }
     }
 
-    // Generate a full HTML page with cart data embedded into it
     private String generateCartPage() {
         String cartData = viewCart();  // Get the cart data as a string (HTML table or empty message)
 
@@ -113,27 +119,27 @@ public class CartHandler implements HttpHandler {
                 "</html>";
     }
 
-    // Generate a view of the cart contents in HTML format
     private String viewCart() {
         if (items.isEmpty()) {
             return "<p>Your cart is empty!</p>";
         }
 
-        StringBuilder cartContents = new StringBuilder("<table><thead><tr><th>Product</th><th>Price</th><th>Quantity</th></tr></thead><tbody>");
-        for (Item item : items) {
-            cartContents.append("<tr><td>").append(item.getName()).append("</td><td>$").append(item.getPrice()).append("</td><td>").append(item.getQuantity()).append("</td></tr>");
+        StringBuilder cartContents = new StringBuilder("<table><thead><tr><th>Product</th><th>Price</th><th>Quantity</th><th>Action</th></tr></thead><tbody>");
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            cartContents.append("<tr><td>").append(item.getName())
+                    .append("</td><td>RM").append(item.getPrice())
+                    .append("</td><td>").append(item.getQuantity())
+                    .append("</td><td><form action=\"/cart/remove\" method=\"POST\"><button type=\"submit\" name=\"index\" value=\"").append(i).append("\">Remove</button></form></td></tr>");
         }
         cartContents.append("</tbody></table>");
-        cartContents.append("<p><strong>Total:</strong> $").append(getTotal()).append("</p>");
+        cartContents.append("<p><strong>Total:</strong> RM").append(getTotal()).append("</p>");
         return cartContents.toString();
     }
 
-    // Calculate the total price of all items in the cart
     private double getTotal() {
-        double total = 0.0;
-        for (Item item : items) {
-            total += item.getPrice() * item.getQuantity();  // Assuming quantity is a field in the Item class
-        }
-        return total;
+        return items.stream().mapToDouble(item -> item.getPrice() * item.getQuantity()).sum();
     }
 }
+
+

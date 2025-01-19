@@ -1,57 +1,58 @@
-// Initialize the cart from localStorage or create an empty cart
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+// Load cart items from localStorage
+function loadCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer = document.getElementById('cart-items');
+    const totalPriceElement = document.getElementById('total-price');
+    cartContainer.innerHTML = '';
 
-// Function to add a product to the cart
-function addToCart(productName, productPrice) {
-    // Add to localStorage
-    cart.push({ name: productName, price: productPrice });
-    localStorage.setItem('cart', JSON.stringify(cart));  // Save the updated cart in localStorage
+    let totalPrice = 0;
 
-    // Send the product to the server to be added to the server-side cart
-    fetch('/cart', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name: productName, price: productPrice, quantity: 1 })  // Sending default quantity as 1
-    })
-        .then(response => response.text())
-        .then(data => {
-            alert(`${productName} has been added to your cart.`);
-        })
-        .catch(error => console.error('Error adding item to server cart:', error));
+    cart.forEach((item, index) => {
+        // Ensure valid data
+        const price = parseFloat(item.price) || 0;
+        const quantity = parseInt(item.quantity) || 1; // Default quantity to 1 if invalid
+
+        const productRow = `
+      <tr>
+        <td>${item.name || 'Undefined'}</td>
+        <td>RM ${price.toFixed(2)}</td>
+        <td>${quantity}</td>
+        <td>RM ${(price * quantity).toFixed(2)}</td>
+        <td><button class="remove-btn" onclick="removeFromCart(${index})">Remove</button></td>
+      </tr>
+    `;
+        cartContainer.innerHTML += productRow;
+        totalPrice += price * quantity;
+    });
+
+    totalPriceElement.textContent = RM ${totalPrice.toFixed(2)};
 }
 
-// Function to display the cart contents
-function viewCart() {
-    // Fetch the cart contents from the server
-    fetch('/cart')
-        .then(response => response.json())
-        .then(cartResponse => {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const totalElement = document.getElementById('cart-total');
-
-            // Clear previous cart items
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
-
-            cartResponse.items.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.name}</td>
-                    <td>$${item.price.toFixed(2)}</td>
-                    <td>${item.quantity}</td>
-                    <td>$${(item.price * item.quantity).toFixed(2)}</td>
-                `;
-                cartItemsContainer.appendChild(row);
-                total += item.price * item.quantity;
-            });
-
-            // Update the total price
-            totalElement.innerText = total.toFixed(2);
-        })
-        .catch(error => {
-            console.error('Error retrieving cart:', error);
-        });
+// Remove item from cart
+function removeFromCart(index) {
+    if (confirm('Are you sure you want to remove this item?')) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.splice(index, 1); // Remove the selected item
+        localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+        loadCart(); // Reload cart items
+    }
 }
 
+// Clear entire cart
+function clearCart() {
+    if (confirm('Are you sure you want to clear the entire cart?')) {
+        localStorage.removeItem('cart'); // Remove cart data from localStorage
+        loadCart(); // Reload cart to reflect changes
+    }
+}
+
+function redirectToCheckout() {
+    // Redirect the user to the checkout page
+    window.location.href = 'checkout.html';
+}
+
+// Initialize cart on page load
+window.onload = function () {
+    loadCart();
+    document.getElementById('clear-cart-btn').addEventListener('click', clearCart);
+};
