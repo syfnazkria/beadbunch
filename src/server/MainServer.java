@@ -43,8 +43,8 @@ public class MainServer {
 
                 if (adminPage.exists()) {
                     String htmlContent = Files.lines(adminPage.toPath()).collect(Collectors.joining("\n"));
-                    htmlContent = htmlContent.replace("{{CART_DATA}}", readCSV("src/resources/cart.csv"));
-                    htmlContent = htmlContent.replace("{{CHECKOUT_DATA}}", readCSV("src/resources/checkout.csv"));
+                    htmlContent = htmlContent.replace("{{PRODUCT_DATA}}", readCSV("src/resources/product.csv"));
+                    htmlContent = htmlContent.replace("{{ORDER_DATA}}", readCSV("src/resources/order.csv"));
 
                     exchange.getResponseHeaders().add("Content-Type", "text/html");
                     exchange.sendResponseHeaders(200, htmlContent.getBytes().length);
