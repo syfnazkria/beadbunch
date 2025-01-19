@@ -1,28 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeadBunch - Checkout</title>
     <link rel="stylesheet" href="../resources/styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #45181b;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1.1em;
+            color: #444;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #44181b;
+            outline: none;
+        }
+        button {
+            background-color: #44181b;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.2em;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #44181b;
+        }
+        .link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .link a {
+            color: #44181b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h1>Checkout</h1>
-<form action="/submit-order" method="post">
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" required><br><br>
 
-    <label for="address">Shipping Address:</label><br>
-    <textarea id="address" name="address" rows="4" required></textarea><br><br>
+<div class="container">
+    <h1>Checkout</h1>
+    <form action="/submit-order" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
 
-    <label for="payment">Payment Method:</label><br>
-    <select id="payment" name="payment">
-        <option value="credit">Credit Card</option>
-        <option value="paypal">PayPal</option>
-        <option value="cod">Cash on Delivery</option>
-    </select><br><br>
+        <label for="address">Shipping Address:</label>
+        <textarea id="address" name="address" rows="4" required></textarea>
 
-    <button type="submit">Place Order</button>
-</form>
-<br>
-<a href="/">Go Back to Home</a>
+        <label for="payment">Payment Method:</label>
+        <select id="payment" name="payment">
+            <option value="credit">Credit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="cod">Cash on Delivery</option>
+        </select>
+
+        <button type="submit">Place Order</button>
+    </form>
+
+    <div class="link">
+        <a href="/">Go Back to Home</a>
+    </div>
+</div>
+
 </body>
 </html>
