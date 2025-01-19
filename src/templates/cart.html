@@ -147,40 +147,19 @@
   function loadCart() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartContainer = document.getElementById('cart-items');
-    const totalPriceElement = document.getElementById('total-price');
-    cartContainer.innerHTML = '';
-    let totalPrice = 0;
-
-    cart.forEach((item, index) => {
-      const productRow = `
-                <tr>
-                    <td>${item.name}</td>
-                    <td>RM ${item.price.toFixed(2)}</td>
-                    <td>${item.quantity}</td>
-                    <td>RM ${(item.price * item.quantity).toFixed(2)}</td>
-                    <td><button class="action-btn" onclick="removeFromCart(${index})">Remove</button></td>
-                </tr>`;
-      cartContainer.innerHTML += productRow;
-      totalPrice += item.price * item.quantity;
-    });
-
-    totalPriceElement.textContent = `RM ${totalPrice.toFixed(2)}`;
-  }
-
-  function removeFromCart(index) {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    loadCart();
+    cartContainer.innerHTML = cart.length
+            ? cart.map(item => `<p>${item.name}: $${item.price}</p>`).join('')
+            : '<p>Cart is empty</p>';
   }
 
   function clearCart() {
     localStorage.removeItem('cart');
     loadCart();
+    alert('Cart cleared!');
   }
 
-  document.getElementById('clear-cart-btn').addEventListener('click', clearCart);
-  window.onload = loadCart;
+  // Load cart on page load
+  document.addEventListener('DOMContentLoaded', loadCart);
 </script>
 
 </body>

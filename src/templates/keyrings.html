@@ -3,15 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeadBunch - Keyrings</title>
+    <title>BeadBunch - Keychains</title>
     <link rel="stylesheet" href="/resources/styles.css">
-    <script src="cart.js" defer></script>
+    <script>
+        // Update cart count
+        function updateCartCount() {
+            const cartCountElement = document.querySelector('.cart-count');
+            cartCountElement.textContent = cartCount;
+        }
+
+        // Function to handle "Add to Cart"
+        function addToCart(productId, productName, productPrice) {
+            cartCount++;
+            updateCartCount();
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const product = {
+                productId: productId,
+                name: productName,
+                price: productPrice
+            };
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Fetch products from server-side CSV and display them
+        function fetchAndDisplayProducts() {
+            fetch('products.csv')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch products CSV file');
+                    }
+                    return response.text();
+                })
+                .then(csvData => {
+                    parseCSV(csvData);
+                })
+                .catch(error => {
+                    console.error("Error fetching CSV data:", error);
+                });
+        }
+
+        // Parse CSV data and render products
+        function parseCSV(csvData) {
+            const rows = csvData.split('\n');
+            const productContainer = document.querySelector('.product-list');
+            rows.forEach((row, index) => {
+                if (index === 0) return;
+                const columns = row.split(',');
+                if (columns.length !== 6) {
+                    console.error("Invalid row detected, skipping:", row);
+                    return;
+                }
+                const [typecode, id, type, name, price, imageUrl] = columns;
+                if (typecode === '2') {
+                    const productHTML = `
+                        <div class="product-item">
+                            <img src="${imageUrl}" alt="${name}">
+                            <h2>${name}</h2>
+                            <p>${type}</p>
+                            <div class="price">RM ${price}</div>
+                            <button class="add-to-cart-btn" onclick="addToCart(${id}, '${name}', '${price}')">Add to Cart</button>
+                        </div>
+                    `;
+                    productContainer.innerHTML += productHTML;
+                }
+            });
+        }
+
+        window.onload = fetchAndDisplayProducts;
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: url('/resources/backgroundkeyring.jpg') no-repeat center center fixed;
+            background: url('/resources/backgroundkeychain.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #333;
         }
@@ -110,21 +177,11 @@
         .add-to-cart-btn:hover {
             background-color: #9f5b5f;
         }
-        .description {
-            margin-top: 30px;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #444;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
         footer {
             text-align: center;
             padding: 10px;
             background: rgb(51, 51, 51);
+            color: #fff;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         }
     </style>
@@ -147,7 +204,6 @@
 <main>
     <section class="hero">
         <h2>KEYRINGS</h2>
-
     </section>
 
     <section class="product-showcase">
@@ -192,11 +248,26 @@
         <p class="description">
             Explore our diverse range of keyrings, with designs that add flair to your keys and accessories. From sleek to fun, there's something for everyone. Don't miss out on our limited-edition releases—grab yours today!
         </p>
+        </div>
     </section>
 </main>
+
+<script>
+    function addToCart(productId, productName, productPrice) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const product = { productId, name: productName, price: productPrice };
+        cart.push(product);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert(`${productName} added to cart!`);
+    }
+</script>
+
 
 <footer>
     <p>&copy; 2025 BeadBunch. All Rights Reserved.</p>
 </footer>
+
+<script src="scripts/cart.js"></script>
+
 </body>
 </html>
