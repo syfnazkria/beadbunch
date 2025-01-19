@@ -37,14 +37,16 @@ public class CartHandler implements HttpHandler {
 
     // Handle GET requests (view cart)
     private void handleGetRequest(HttpExchange exchange) throws IOException {
-        // Generate the full HTML response with header, footer, and cart content
-        String response = generateCartPage();
+        // Read the cart.html file contents
+        String response = new String(Files.readAllBytes(Paths.get("src/templates/cart.html")));
         exchange.getResponseHeaders().add("Content-Type", "text/html; charset=UTF-8");
         exchange.sendResponseHeaders(200, response.getBytes().length);
+
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(response.getBytes());
         }
     }
+
 
     // Handle POST requests (add items to cart)
     private void handlePostRequest(HttpExchange exchange) throws IOException {
@@ -78,10 +80,9 @@ public class CartHandler implements HttpHandler {
 
     // Generate a full HTML page with cart data embedded into it
     private String generateCartPage() {
-        // Get the cart data from the server
         String cartData = viewCart();  // Get the cart data as a string (HTML table or empty message)
 
-        // Dynamically inject cart contents into the page
+        // Return the complete HTML page with header, footer, and cart data
         return "<!DOCTYPE html>" +
                 "<html lang=\"en\">" +
                 "<head>" +
@@ -112,17 +113,15 @@ public class CartHandler implements HttpHandler {
                 "</html>";
     }
 
-
-    // Generate a view of the cart contents in HTML format
     // Generate a view of the cart contents in HTML format
     private String viewCart() {
         if (items.isEmpty()) {
             return "<p>Your cart is empty!</p>";
         }
 
-        StringBuilder cartContents = new StringBuilder("<table><thead><tr><th>Product</th><th>Price</th><th>Quantity</th><th>Total</th></tr></thead><tbody>");
+        StringBuilder cartContents = new StringBuilder("<table><thead><tr><th>Product</th><th>Price</th><th>Quantity</th></tr></thead><tbody>");
         for (Item item : items) {
-            cartContents.append("<tr><td>").append(item.getName()).append("</td><td>$").append(item.getPrice()).append("</td><td>").append(item.getQuantity()).append("</td><td>$").append(item.getPrice() * item.getQuantity()).append("</td></tr>");
+            cartContents.append("<tr><td>").append(item.getName()).append("</td><td>$").append(item.getPrice()).append("</td><td>").append(item.getQuantity()).append("</td></tr>");
         }
         cartContents.append("</tbody></table>");
         cartContents.append("<p><strong>Total:</strong> $").append(getTotal()).append("</p>");
